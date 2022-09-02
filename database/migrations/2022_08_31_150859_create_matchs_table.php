@@ -19,8 +19,8 @@ class CreateMatchsTable extends Migration
             $table->integer('team_b');            
             $table->integer('goals_a');
             $table->integer('goals_b');
-            $table->text('logs_a');
-            $table->text('logs_b');
+            $table->text('logs_a')->nullable();
+            $table->text('logs_b')->nullable();
             $table->timestamps();
         });
     }

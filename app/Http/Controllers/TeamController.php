@@ -14,13 +14,14 @@ class TeamController extends Controller
   }
 
   public function show ($id) {
-    $data = Team::findOrFail($id);    
+    $data = Team::findOrFail($id);
     return response()->json($data);
   }
 
   public function store (Request $request) {
     $data = new Team;
     $data->name = $request->name;
+    $data->image = $request->image;
 
     $data->save();
 
