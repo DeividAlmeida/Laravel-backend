@@ -23,7 +23,6 @@ class PlayerController extends Controller
     $data = new Player;
     $data->team_id = $request->team_id;
     $data->name = $request->name;
-    $data->position = $request->position;
     $data->number = $request->number;
     $data->save();
     $dataAll = Player::all();

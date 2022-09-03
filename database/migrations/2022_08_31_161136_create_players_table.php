@@ -20,7 +20,6 @@ class CreatePlayersTable extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
           $table->string('name');
-          $table->string('position')->nullable();
           $table->string('number')->nullable();
           $table->timestamps();
         });
