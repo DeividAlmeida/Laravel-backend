@@ -6,11 +6,17 @@ use Illuminate\Http\Request;
 
 use App\Models\Player;
 
+use Illuminate\Support\Facades\DB;
 
 class PlayerController extends Controller
 {
   public function index () {
     $data = Player::all();
+    foreach ($data as $key => $row) {
+      $data[$key]->team = DB::table('teams')
+      ->where('id', $row->team_id)
+      ->value('name');
+    }
     return response()->json($data);
   }
 
