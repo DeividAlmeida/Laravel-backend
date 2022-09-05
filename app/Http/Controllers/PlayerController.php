@@ -32,6 +32,11 @@ class PlayerController extends Controller
     $data->number = $request->number;
     $data->save();
     $dataAll = Player::all();
+    foreach ($dataAll as $key => $row) {
+      $dataAll[$key]->team = DB::table('teams')
+      ->where('id', $row->team_id)
+      ->value('name');
+    }
     return response()->json($dataAll);
   }
 }

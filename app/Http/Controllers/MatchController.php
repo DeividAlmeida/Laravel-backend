@@ -6,10 +6,17 @@ use Illuminate\Http\Request;
 
 use App\Models\Match;
 
+use Illuminate\Support\Facades\DB;
+
 class MatchController extends Controller
 {
   public function index () {
     $data = Match::all();
+    foreach ($data as $key => $row) {
+      $data[$key]->team = DB::table('teams')
+      ->where('id', $row->team_id)
+      ->value('name');
+    }
     return response()->json($data);
   }
 
@@ -21,8 +28,14 @@ class MatchController extends Controller
     $data->goals_b = $request->goals_b;
     $data->logs_a = $request->logs_a;
     $data->logs_b = $request->logs_b;
+    $data->matchday = $request->matchday;
     $data->save();
     $dataAll = Match::all();
+    foreach ($dataAll as $key => $row) {
+      $dataAll[$key]->team = DB::table('teams')
+      ->where('id', $row->team_id)
+      ->value('name');
+    }
     return response()->json($dataAll);
   }
 }
