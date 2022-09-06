@@ -13,9 +13,7 @@ class PlayerController extends Controller
   public function index () {
     $data = Player::all();
     foreach ($data as $key => $row) {
-      $data[$key]->team = DB::table('teams')
-      ->where('id', $row->team_id)
-      ->value('name');
+      $data[$key]->team = $this->getTeam($row->team);
     }
     return response()->json($data);
   }
@@ -33,10 +31,12 @@ class PlayerController extends Controller
     $data->save();
     $dataAll = Player::all();
     foreach ($dataAll as $key => $row) {
-      $dataAll[$key]->team = DB::table('teams')
-      ->where('id', $row->team_id)
-      ->value('name');
+      $dataAll[$key]->team = $this->getTeam($row->team);
     }
     return response()->json($dataAll);
+  }
+
+  private function getTeam($id) {
+    return DB::table('teams')->where('id', $id)->value('name');
   }
 }
