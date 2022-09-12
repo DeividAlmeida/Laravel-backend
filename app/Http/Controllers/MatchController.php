@@ -15,6 +15,8 @@ class MatchController extends Controller
     foreach ($data as $key => $row) {
       $data[$key]->team_a = $this->getTeam($row->team_a);
       $data[$key]->team_b = $this->getTeam($row->team_b);
+      $data[$key]->logs_a = $this->stringToJson($row->logs_a);
+      $data[$key]->logs_b = $this->stringToJson($row->logs_b);
       $data[$key]->matchday = $this->dateFormatted($row->matchday);
     }
     return response()->json($data);
@@ -34,6 +36,8 @@ class MatchController extends Controller
     foreach ($dataAll as $key => $row) {
       $dataAll[$key]->team_a = $this->getTeam($row->team_a);
       $dataAll[$key]->team_b = $this->getTeam($row->team_b);
+      $dataAll[$key]->logs_a = $this->stringToJson($row->logs_a);
+      $dataAll[$key]->logs_b = $this->stringToJson($row->logs_b);
       $dataAll[$key]->matchday = $this->dateFormatted($row->matchday);
     }
     return response()->json($dataAll);
@@ -45,5 +49,9 @@ class MatchController extends Controller
 
   private function getTeam($id) {
     return DB::table('teams')->where('id', $id)->value('name');
+  }
+
+  private function stringToJson($string) {
+    return json_decode($string, false);
   }
 }
